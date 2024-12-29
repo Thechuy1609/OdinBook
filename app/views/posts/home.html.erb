@@ -1,0 +1,51 @@
+<nav class="navbar">
+  <a href="/" class="navbar-logo">OdinBook</a>
+  <div class="navbar-actions">
+    <div class="account-pref">
+    <% if current_user %>
+      <%= link_to "Edit Account", edit_user_registration_path %>
+      <%= button_to "Logout", destroy_user_session_path, data: {turbo: "false"}, method: :delete %>
+    <% else %>
+      <%= link_to "Login", new_user_session_path %>
+      <%= link_to "Create Account", new_user_registration_path %>
+    <% end %>
+      </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <div class="left-bar">
+    <h3>Followers:<% @followers.each do |i| %></h3>
+      <p>  <%= i.email %> </p>
+    <% end %><br>
+    <h3>Following:<% @followees.each do |i| %></h3>
+      <p>  <%= i.full_name%></p>
+    <% end %><br>
+  </div>
+
+  <div class="posts-container">
+    <div class="self-info"><% if current_user%>
+    <h2>Welcome <%=current_user.full_name + "!"|| "back!"%></h2><br>
+    <h3> What are you thinking?</h3>
+    <%= turbo_frame_tag "new_post", src: new_post_path , method: :post%>
+<div id="posts">
+  <%= render @posts %>
+</div>
+    </div>
+    
+    <% end %>
+  </div>
+
+  <div class="right-bar">
+  <div class="friends">
+      <h3>People you may want to follow:</h3>
+      <ul>
+        <% @other_users.each do |other_user| %>
+          <li>
+            <%= other_user.full_name %> <%= button_to 'Follow', user_follow_path(other_user), method: :post %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

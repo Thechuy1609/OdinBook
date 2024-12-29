@@ -6,4 +6,18 @@
 #
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+# end
+
+
+
+   if User.all.count >= 20
+  return
+   end
+20.times do |n|
+  name = Faker::FunnyName.two_word_name
+
+  user = User.create!(full_name: username = "#{name.parameterize(separator: '_')}#{n}",
+                      email: "#{username}#{n}@example.org",
+                      password: 'foobar')
+                      puts "users seeded"
+ end

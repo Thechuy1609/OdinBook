@@ -1,0 +1,6 @@
+<%= turbo_frame_tag "new_post" do %>
+  <%= form_with model: @post do |form| %>
+    <%= form.text_area :content%>
+<%= form.submit "Post", class: "custom-button" %>
+  <% end %>
+<% end %>

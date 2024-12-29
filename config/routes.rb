@@ -1,10 +1,21 @@
 Rails.application.routes.draw do
- root "pages#home"
+ root "posts#home"
   devise_for :users, controllers: {
     registrations: 'users/registrations' ,
     sessions: 'users/sessions' ,
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
+  resources :users do
+    post 'follow',   to: 'socializations#follow'
+    post 'unfollow', to: 'socializations#unfollow'
+  end
+  
+  resources :categories, only: [:index] do
+    post 'follow',   to: 'socializations#follow'
+    post 'unfollow', to: 'socializations#unfollow'
+  end
+  resources :profile
+  resources :posts
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
