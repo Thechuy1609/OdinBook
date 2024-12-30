@@ -1,4 +1,10 @@
-
-<div>
-  <%= post.content %>
+<div class="post-content">
+  <div class="post-info">
+    <p>
+      <strong><%= post.user.full_name %></strong> 
+      • 
+      <%= time_ago_in_words(post.created_at) %> ago
+    </p>
+  </div>
+  <p><%= post.content %></p>
 </div>

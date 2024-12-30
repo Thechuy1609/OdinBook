@@ -8,7 +8,7 @@ class PostsController < ApplicationController
     @post = Post.new
   end
   def home
-    @posts = Post.all
+    @posts = Post.includes(:user).order(created_at: :desc)
     @user =  current_user
     @followers =  @user.followers(User)
     @other_users = User.all.where("id != ?", current_user.id).where.not(id: current_user.followees(User).pluck(:id))

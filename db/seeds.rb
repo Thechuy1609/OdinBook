@@ -10,10 +10,10 @@
 
 
 
-   if User.all.count >= 20
+   if User.all.count >= 50
   return
    end
-20.times do |n|
+50.times do |n|
   name = Faker::FunnyName.two_word_name
 
   user = User.create!(full_name: username = "#{name.parameterize(separator: '_')}#{n}",

@@ -205,9 +205,9 @@
 
 
 .posts-container {
-  width: 700px;
-  margin: 30px auto 0;
-}
+    flex-grow: 1;
+    margin: 0 20px;
+  }
 
 .self-info {
   background: white;
@@ -286,28 +286,27 @@
   background-color: #da4d10;
 }
 .left-bar{
-width: 200px;
-height: fit-content;
-border: 1px solid #dbdbdb;
-border-radius: 8px;
-padding: 20px;
+  width: 200px;
+  border: 1px solid #dbdbdb;
+  border-radius: 8px;
+  padding: 20px;
+   background: white;
 
 }
 
 .main-container {
   display: flex;
-  width: 100%;
   justify-content: space-between;
   margin-top: 100px;
+  height: calc(100vh - 100px); /* Full viewport height minus navbar */
 }
 
 
 
 .right-bar {
-  width: 300px;
+  width: 320px;
   background: white;
   border-radius: 8px;
-  height: fit-content;
 }
 
 .custom-button {
@@ -325,10 +324,76 @@ padding: 20px;
   background-color: #da4d10;
 }
 
+.all-posts{
+  background: white;
+  border: 1px solid #dbdbdb;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
 
+}
 
   textarea {
-  width: 630px;
+  width: 830px;
   height: 150px;
   resize: none;
+  font-size: 30px;
   }
+
+  body{
+    background-color: #f4f2f2;
+  }
+  .post-content{
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: #fff;
+    
+  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+ 
+.left-bar,.right-bar,.posts-container{
+  overflow-y: auto;
+  background: white;
+}
+
+.post-info {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #555;
+}
+.post-info strong {
+  color: #000;
+  margin-right: 5px;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  list-style: none;
+  padding: 0;
+}
+
+.pagination a, .pagination span {
+  margin: 0 5px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #555;
+}
+
+.pagination a:hover {
+  background-color: #f0f0f0;
+}
+
+.pagination .current {
+  background-color: #ddd;
+  font-weight: bold;
+}

@@ -22,19 +22,23 @@
       <p>  <%= i.full_name%></p>
     <% end %><br>
   </div>
+  
 
   <div class="posts-container">
     <div class="self-info"><% if current_user%>
     <h2>Welcome <%=current_user.full_name + "!"|| "back!"%></h2><br>
-    <h3> What are you thinking?</h3>
     <%= turbo_frame_tag "new_post", src: new_post_path , method: :post%>
-<div id="posts">
-  <%= render @posts %>
-</div>
     </div>
-    
+    <% end %>
+
+  <div class="all-posts" id="posts">
+    <% @posts.each do |post| %>
+      <div class="post">
+        <%= render partial: "post", locals: { post: post } %>
+      </div>
     <% end %>
   </div>
+</div>
 
   <div class="right-bar">
   <div class="friends">

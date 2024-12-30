@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :posts
-  validates :full_name, length: { minimum: 5 }
+  validates :full_name, length: { minimum: 5}
+  validates :full_name, length: { maximum: 16 }
   validates :full_name, :email, :encrypted_password, uniqueness: true
   validates :full_name, :email, :encrypted_password, presence: true
   devise :database_authenticatable, :registerable,
