@@ -30,10 +30,13 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
+<% if resource.provider.present? %>
+ <% else %>
   <div class="field">
     <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
     <%= f.password_field :current_password, autocomplete: "current-password" %>
   </div>
+  <% end %>
 
   <div class="actions">
     <%= f.submit "Update" %>
@@ -42,6 +45,9 @@
 
 <h3>Cancel my account</h3>
 
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div><br>
 
-<%= link_to "Back", :back %>
+<div class="back">
+  <%= link_to "Back", :back, style: "display: inline-block; background-color: #333333; color: white; padding: 10px 20px; font-size: 16px; font-weight: bold; text-align: center; text-decoration: none; border-radius: 5px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); transition: background-color 0.3s ease, box-shadow 0.3s ease;" %>
+</div>
+

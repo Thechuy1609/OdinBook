@@ -1,32 +1,55 @@
-<nav class="navbar">
-  <a href="/" class="navbar-logo">OdinBook</a>
-  <div class="navbar-actions">
-    <div class="account-pref">
-    <% if current_user %>
-      <%= link_to "Edit Account", edit_user_registration_path %>
-      <%= button_to "Logout", destroy_user_session_path, data: {turbo: "false"}, method: :delete %>
-    <% else %>
-      <%= link_to "Login", new_user_session_path %>
-      <%= link_to "Create Account", new_user_registration_path %>
-    <% end %>
+<div class="the-container">
+  <nav class="navbar">
+    <a href="/" class="navbar-logo">OdinBook</a>
+    <div class="navbar-actions">
+      <% if current_user.avatar_url != nil %>
+        <%= link_to profile_path(current_user.id), style: "display: inline-block; text-decoration: none;" do %>
+          <%= image_tag(
+            current_user.avatar_url, 
+            style: "width: 50px; height: 50px; border-radius: 50%; border: 2px solid linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); box-sizing: border-box; padding: 2px; transition: transform 0.3s, border-color 0.3s;"
+          ) %>
+        <% end %>
+      <% else %>
+        <%= link_to profile_path(current_user.id), style: "display: inline-block; text-decoration: none;" do %>
+          <%= image_tag("avatar.png", 
+            style: "width: 50px; height: 50px; border-radius: 50%; border: 2px solid linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); box-sizing: border-box; padding: 2px; transition: transform 0.3s, border-color 0.3s;"
+          ) %>
+        <% end %>
+      <% end %>
+
+      <style>
+        a:hover img {
+          transform: scale(1.2); /* Increases size by 20% */
+          border-color: #4caf50; /* Changes border to green */
+        }
+      </style>
+
+      <div class="account-pref">
+        <% if current_user %>
+          <%= button_to "Logout", destroy_user_session_path, data: {turbo: "false"}, method: :delete %>
+        <% else %>
+          <%= link_to "Login", new_user_session_path %>
+          <%= link_to "Create Account", new_user_registration_path %>
+        <% end %>
       </div>
-  </div>
-</nav>
+    </div>
+  </nav>
+</div>
 
 <div class="main-container">
   <div class="left-bar">
     <h3>Followers:<% @followers.each do |i| %></h3>
-      <p>  <%= i.email %> </p>
+       <p><%= link_to i.full_name, profile_path(i), class: "no-decoration" %></p>
     <% end %><br>
     <h3>Following:<% @followees.each do |i| %></h3>
-      <p>  <%= i.full_name%></p>
+       <p><%= link_to i.full_name, profile_path(i), class: "no-decoration"  %></p>
     <% end %><br>
   </div>
   
 
   <div class="posts-container">
     <div class="self-info"><% if current_user%>
-    <h2>Welcome <%=current_user.full_name + "!"|| "back!"%></h2><br>
+    <h2>Welcome <%=current_user.full_name + "!"|| "back!"%></h2><br> 
     <%= turbo_frame_tag "new_post", src: new_post_path , method: :post%>
     </div>
     <% end %>
@@ -46,7 +69,7 @@
       <ul>
         <% @other_users.each do |other_user| %>
           <li>
-            <%= other_user.full_name %> <%= button_to 'Follow', user_follow_path(other_user), method: :post %>
+            <%= link_to other_user.full_name, profile_path(other_user), class: "no-decoration"%> <%= button_to 'Follow', user_follow_path(other_user), method: :post %>
           </li>
         <% end %>
       </ul>

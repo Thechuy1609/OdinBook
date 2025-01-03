@@ -1,6 +1,6 @@
 <%= turbo_frame_tag "new_post" do %>
   <%= form_with model: @post do |form| %>
-    <%= form.text_area :content, placeholder: "What are you thinking " + current_user.full_name + "?"%>
+    <%= form.rich_textarea :content, placeholder: "What are you thinking " + current_user.full_name + "?"%>
 <%= form.submit "Post", class: "custom-button" %>
   <% end %>
 <% end %>

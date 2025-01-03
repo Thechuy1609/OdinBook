@@ -3,12 +3,22 @@ class SocializationsController < ApplicationController
 
   def follow
     current_user.follow!(@socializable)
-    render json: { follow: true }
+    redirect_to root_path
   end
 
   def unfollow
     current_user.unfollow!(@socializable)
-    render json: { follow: false }
+    redirect_to root_path 
+  end
+
+  def like
+    current_user.like!(@socializable)
+    redirect_to root_path 
+  end
+
+  def unlike
+    current_user.unlike!(@socializable)
+    redirect_to root_path 
   end
 
 private
@@ -21,8 +31,8 @@ private
         @community.items.find(id)
       when id = params[:user_id]
         User.find(id)
-      when id = params[:category_id]
-        @community.categories.find_by_id(id)
+      when id = params[:id]
+        Post.find_by_id(id)
       else
         raise ArgumentError, "Unsupported socializable model, params: " +
                              params.keys.inspect

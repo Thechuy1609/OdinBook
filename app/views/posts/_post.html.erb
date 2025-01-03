@@ -1,10 +1,44 @@
 <div class="post-content">
   <div class="post-info">
     <p>
-      <strong><%= post.user.full_name %></strong> 
+      <strong><%= link_to post.user.full_name, profile_path(post.user), class: "no-decoration" %></strong> 
       • 
       <%= time_ago_in_words(post.created_at) %> ago
     </p>
+    <p><%=post.content %></p>
   </div>
-  <p><%= post.content %></p>
+
+  <%= link_to 'View Post', post_path(post), class: "view-post-link" %>
+<div class="resources-post">
+  <% if post.user.id == current_user.id %> 
+    <div class="delete-btn">
+      <%= button_to 'Delete', post_path(post), method: :delete, 
+                    data: { turbo: "false", confirm: "Delete this post?" } %>
+    </div>
+  <% end %>
+      <% if post.likers_count < 2 && post.likers_count > 0 %>
+      <p><%= post.likers_count %> like </p>
+    <% else %>
+      <p><%= post.likers_count %> likes </p>
+    <% end %>
+    <% if post.comments.count < 2 %>
+      <p><%= post.comments.count %> comment </p>
+    <% else %>
+      <p><%= post.comments.count %> comments</p>
+    <% end %>
+    <% if post.liked_by?(current_user) %>
+      <div class="like-unactive">
+        <%= button_to unlike_post_path(post), method: :delete, class: "like-button" do %>
+          <i class="fas fa-thumbs-down"></i>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="like-active">
+        <%= button_to like_post_path(post), method: :post, class: "like-button" do %>
+          <i class="fas fa-thumbs-up"></i>
+        <% end %>
+      </div>
+    <% end %>
+       </div>
 </div>
+

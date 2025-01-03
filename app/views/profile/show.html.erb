@@ -1,0 +1,66 @@
+ <div class="profile-header">
+   <a href="/" class="navbar-logo">OdinBook</a>
+   
+      <div class="user-info">
+    <h2><%=@user.full_name%></h2>
+    <div class="user-profile-logo">
+     <% if @user.avatar_url != nil%>
+        <%= link_to profile_path(@user.id), style: "display: inline-block; text-decoration: none;" do %>
+          <%= image_tag(
+            @user.avatar_url, 
+            style: "width: 150px; height: 150px; border-radius: 50%; border: 2px solid linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); box-sizing: border-box; padding: 2px; transition: transform 0.3s, border-color 0.3s;"
+          ) %>
+        <% end %>
+        </div>
+      <% else %>
+        <%= link_to profile_path(@user.id), style: "display: inline-block; text-decoration: none;" do %>
+          <%= image_tag("avatar.png",
+            style: "width: 220px; height: 210px;border-radius: 50%; border: 2px solid l inear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); box-sizing: border-box; padding: 12px; transition: transform 0.3s, border-color 0.3s;"
+          )  %>
+        <% end %>
+      <% end %>
+      <div class="followers-side">
+          <span><%=@user.posts.count%> posts</span>
+          <span><%=@followers%> Followers</span>
+          <span><%=@followees%> following</span>
+         </div>
+  <% if current_user.follows?(@user)%>     
+  <%= button_to 'unfollow', user_unfollow_path(@user), method: :post, class: "follow-button" %>      
+<% elsif @user == current_user%>      
+<%else %>          
+  <%= button_to 'follow', user_follow_path(@user), method: :post, class: "follow-button" %>       
+<%end%>
+          </div>
+        </div><br>
+
+  <% if @user == current_user%>
+  <%= button_to "Edit Account", edit_user_registration_path,method: :get,class: "edit-button"  %>
+ <% end %>
+
+<div class="profile-user-posts">
+  <% if @posts.any? %>
+    <% @posts.each do |p| %>
+      <%= link_to post_path(p), class: "post-link" do %>
+        <div class="post">
+          <p>
+            <strong><%= p.user.full_name %></strong>
+            •
+            <%= time_ago_in_words(p.created_at) %> ago
+          </p>
+          <div class="content-post">
+            <p><%= p.content %></p>
+          </div>
+        </div>
+      <% end %>
+      <% if @user == current_user %>
+        <div class="delete-btn2">
+          <%= button_to 'Delete', post_path(p), method: :delete,
+                        data: {turbo: "false", confirm: "Delete this post?" } %>
+        </div>
+      <% end %>
+      <br>
+    <% end %>
+  <% else %>
+    <p>No posts created</p>
+  <% end %>
+</div>

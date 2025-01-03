@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
  root "posts#home"
+ get 'users/:id/profile', to: 'users#profile', as: 'user_profile'
   devise_for :users, controllers: {
     registrations: 'users/registrations' ,
     sessions: 'users/sessions' ,
@@ -8,15 +9,19 @@ Rails.application.routes.draw do
   resources :users do
     post 'follow',   to: 'socializations#follow'
     post 'unfollow', to: 'socializations#unfollow'
+    post 'like', to: 'socializations#like'
+    delete 'unlike', to: 'socializations#unlike'
   end
   
-  resources :categories, only: [:index] do
-    post 'follow',   to: 'socializations#follow'
-    post 'unfollow', to: 'socializations#unfollow'
-  end
   resources :profile
-  resources :posts
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  resources :posts do
+    member do
+      post 'like', to: 'socializations#like'
+      delete 'unlike', to: 'socializations#unlike' 
+    end
+    resources :comments, only: [:create, :destroy]
+  end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live

@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
   def index
-    @posts = Post.all
+    @posts = Post.includes(:user).order(created_at: :desc)
   end
 
   def new
@@ -29,6 +29,19 @@ class PostsController < ApplicationController
     end
     end
   end
+
+  def show
+    @post = Post.find(params[:id])
+    @comments = @post.comments.order(created_at: :desc)
+  end
+
+
+  def destroy
+  @post = Post.find(params[:id])
+  @post.destroy
+    redirect_to root_path
+  end
+
 
   private
 

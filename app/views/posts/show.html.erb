@@ -1,0 +1,23 @@
+<a href="/" class="show-p-logo">OdinBook</a>
+
+<div class="profile-user-posts">
+  <div class="post-user">
+    <p class="post-header">
+      <strong><%= @post.user.full_name %></strong>
+      •
+      <span class="post-time"><%= time_ago_in_words(@post.created_at) %> ago</span>
+    </p>
+    <div class="content-post">
+      <p><%= @post.content %></p>
+    </div>
+  </div>
+
+<h3>Comments</h3>
+<%= render @comments %>
+
+<div class="comment-add-sec">
+<h2 class="section-title">Add a comment:</h2>
+<div class="add-comment">
+  <%= render "comments/form", post: @post %>
+</div>
+</div>

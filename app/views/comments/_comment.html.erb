@@ -1,0 +1,19 @@
+<div class="comment">
+  <div class="post-info">
+    <p class="commenter">
+      <strong><%= comment.commenter %></strong>
+      <span class="comment-body"><%= comment.body %></span>
+    </p>
+    <div class="about">
+      <span class="time-ago">
+        <%= time_ago_in_words(comment.created_at) %> ago
+      </span>
+  <% if comment.commenter == current_user.full_name %>
+  <div class="delete-btn">
+    <%= button_to 'Delete', post_comment_path(@post, comment), method: :delete,
+                  data: { confirm: "Are you sure?" } %>
+  </div>
+<% end %>
+</div>
+    </div>
+  </div>

@@ -2,6 +2,7 @@
 <html>
   <head>
     <title><%= content_for(:title) || "Odin Book" %></title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -23,12 +24,14 @@
 
   <body>
     <main class="container">
+      <%= yield %>
+            <div class="flashes">
       <% flash.each do |type, msg| %>
   <div>
     <%= msg %>
   </div>
+   </div>
 <% end %>
-      <%= yield %>
     </main>
   </body>
 </html>
