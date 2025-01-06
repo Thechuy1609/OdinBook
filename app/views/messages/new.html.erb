@@ -1,0 +1,11 @@
+<p style="color: green"><%= notice %></p>
+<%= turbo_frame_tag "new_message", target: "_top" do%>
+<%= form_with(model: [ @message.chat, @message], data: {controller: "reset-form", action: "turbo:submit-end->reset-form#reset"}) do |form|%>
+<div class="chat-field">
+  <%= form.text_field :content%>
+    <%= form.submit "Send", class: "chat-btn" %>
+    </div>
+    <%end%>
+        <%end%>
+
+ <%= link_to "Back", @message.chat, class: "chat-btn" %>

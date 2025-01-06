@@ -1,0 +1,18 @@
+
+<%= turbo_stream_from @chat%>
+<%= turbo_frame_tag "chat" do%>
+<%= render @chat %>
+<div class="links-too-b">
+ <%= link_to "Back to chats", chats_path, class: "chat-btn", "data-turbo-frame": "_top" %>
+<%= link_to "Edit this chat", edit_chat_path(@chat), class: "chat-btn" %>
+<%= button_to "Destroy this chat", @chat, method: :delete, class: "chat-btn", "data-turbo-frame": "_top" %>
+</div>
+<%end%>
+
+
+<div id="messages">
+  <%= render @chat.messages%>
+  </div>
+
+   <%= turbo_frame_tag "new_message" , src: new_chat_message_path(@chat), target: "_top"%>
+

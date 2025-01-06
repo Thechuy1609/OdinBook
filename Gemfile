@@ -68,6 +68,5 @@ gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem "socialization"
 gem 'faker'
 gem 'kaminari'
-gem 'rmagick'
-
+gem "letter_opener", group: :development
 

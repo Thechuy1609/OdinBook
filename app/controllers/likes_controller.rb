@@ -3,14 +3,29 @@ class LikesController < ApplicationController
 
   def create
     @post = Post.find(params[:post_id])
-    @like = post.likes.build(user: current_user)
-
-    if @like.save
-      flash[:success] = 'Post liked!'
-    else
-      flash[:error] = 'Unable to like the post.'
+    current_user.like(@post)
+  
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("post_#{@post.id}_likes", partial: "likes/like_section", locals: { post: @post }),
+          turbo_stream.replace("post_#{@post.id}_like_counter", partial: "likes/like_counter", locals: { post: @post })
+        ]
+      end
     end
-
-    redirect_to root_path
   end
-end
+  
+  def destroy
+    @post = Post.find(params[:post_id])
+    current_user.unlike(@post)
+  
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("post_#{@post.id}_likes", partial: "likes/like_section", locals: { post: @post }),
+          turbo_stream.replace("post_#{@post.id}_like_counter", partial: "likes/like_counter", locals: { post: @post })
+        ]
+      end
+    end
+  end
+end 

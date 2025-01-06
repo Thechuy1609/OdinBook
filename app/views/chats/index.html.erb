@@ -1,0 +1,16 @@
+
+<% content_for :title, "Chats" %>
+
+<h1>Chats</h1>
+
+<div id="chats" class="links-too-b">
+  <% @chats.each do |chat| %>
+    <%= render chat %>
+    <p>
+      <%= link_to "Show this chat", chat , class: "chat-btn" %>
+    </p>
+  <% end %>
+</div>
+
+<%= button_to "New chat", new_chat_path,  method: :get, class: "messenger-btn"  %><br>
+<%= button_to "Main", root_path,  method: :get, class: "messenger-btn"  %>

@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  after_create :send_welcome_email
   has_many :posts
   validates :full_name, length: { minimum: 5}
   validates :full_name, length: { maximum: 25 }
@@ -20,5 +21,11 @@ class User < ApplicationRecord
             user.full_name = auth.info.name
             user.avatar_url= auth.info.image
             end
+         end
+
+         private
+
+         def send_welcome_email
+          UserMailer.welcome_email(self).deliver_later
          end
 end

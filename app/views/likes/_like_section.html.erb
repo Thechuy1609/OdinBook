@@ -1,0 +1,21 @@
+<turbo-frame id="post_<%= post.id %>_likes_and_counter">
+  <div class="like-section">
+    <% if post.liked_by?(current_user) %>
+      <div class="like-unactive">
+        <%= button_to unlike_post_path(post), method: :delete, class: "like-button" do %>
+          <i class="fas fa-thumbs-down"></i>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="like-active">
+        <%= button_to like_post_path(post), method: :post, class: "like-button" do %>
+          <i class="fas fa-thumbs-up"></i>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="like-counter">
+      <p><%= post.likers_count %> <%= post.likers_count == 1 ? 'like' : 'likes' %></p>
+    </div>
+  </div>
+</turbo-frame>
