@@ -13,7 +13,16 @@ development:
 
 production:
   <<: *default
-  database: alessandrochuy
+  database: alessandrochuy_production
   username: alessandrochuy
   password: <%= ENV['DATABASE_PASSWORD'] %>
   host: localhost
+
+  cable:
+    adapter: postgresql
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    username: alessandrochuy
+    password: <%= ENV['DATABASE_PASSWORD'] %>
+    database: cable_production
+    host: localhost
