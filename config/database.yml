@@ -2,27 +2,21 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: alessandrochuy
-  password: <%= ENV['DATABASE_PASSWORD'] %>
+  timeout: 5000
 
 development:
   <<: *default
-  database: alessandrochuy
-  username: alessandrochuy
-  password: <%= ENV['DATABASE_PASSWORD'] %>
+  database: cantera-editores_development
+
+test:
+  <<: *default
+  database: cantera-editores_test
 
 production:
-  <<: *default
-  database: alessandrochuy_production
-  username: alessandrochuy
-  password: <%= ENV['DATABASE_PASSWORD'] %>
-  host: localhost
-
-  cable:
-    adapter: postgresql
-    encoding: unicode
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    username: alessandrochuy
-    password: <%= ENV['DATABASE_PASSWORD'] %>
-    database: cable_production
-    host: localhost
+  adapter: postgresql
+  encoding: unicode
+  database: cantera_editores
+  username: postgres
+  password: <%= Rails.application.credentials.password %>
+  host: <%= Rails.application.credentials.host %>
+  port: 5432
